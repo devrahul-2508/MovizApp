@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:id="@+id/item_reviews"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
+    android:padding="@dimen/_20sdp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/imageUser"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_110sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/textUserName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="UserName"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:includeFontPadding="false"
+            app:layout_constraintStart_toEndOf="@id/imageUser"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/imageUser"
+            android:textSize="@dimen/_13ssp"
+            android:paddingTop="@dimen/_8sdp" />
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:includeFontPadding="false"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="@id/textUserName"
+            app:layout_constraintStart_toStartOf="@id/textUserName"
+            app:layout_constraintTop_toBottomOf="@id/textUserName" />
+
+
+        <TextView
+            android:id="@+id/textContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text='Content'
+            android:maxLines="3"
+            android:textStyle="italic"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:includeFontPadding="false"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toStartOf="@id/textUserName"
+            app:layout_constraintEnd_toEndOf="@id/textUserName"
+            app:layout_constraintTop_toBottomOf="@id/textName" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintTop_toBottomOf="@id/textContent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageUser"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:weightSum="4">
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/star"/>
+
+            <TextView
+                android:id="@+id/textRating"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:text="4.3"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:includeFontPadding="false"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintStart_toStartOf="@id/textUserName"
+                app:layout_constraintEnd_toEndOf="@id/textUserName"
+                app:layout_constraintTop_toBottomOf="@id/textContent" />
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+        <View
+            android:id="@+id/viewSupporter"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"
+            app:layout_constraintTop_toBottomOf="@id/imageUser" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
