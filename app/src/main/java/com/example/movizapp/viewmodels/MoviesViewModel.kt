@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.movizapp.models.entities.RandomMovies
 import com.example.movizapp.models.entities.RandomReviews
-import com.example.movizapp.models.network.MovieService
 import com.example.movizapp.repository.MovieRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
