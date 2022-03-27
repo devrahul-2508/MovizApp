@@ -12,7 +12,7 @@ interface MovieApi {
 
     @GET(Constants.UPCOMING_END_POINT)
     fun getUpcomingMovies(
-        @Query(Constants.API_KEY) api_key:String,
+        @Query(Constants.API_KEY) api_key: String,
         @Query(Constants.LANGUAGE) language:String,
         @Query(Constants.PAGE) page:Int
     ):Observable<RandomMovies.Movies>

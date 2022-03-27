@@ -9,17 +9,23 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movizapp.Application.BaseApplication
 import com.example.movizapp.R
 import com.example.movizapp.adapters.MovieAdapters
 import com.example.movizapp.databinding.FragmentPopularBinding
 import com.example.movizapp.models.entities.RandomMovies
 import com.example.movizapp.viewmodels.MoviesViewModel
+import com.example.movizapp.viewmodels.ViewModelFactory
+import javax.inject.Inject
 
 
 class PopularFragment : Fragment() {
 
 
     private lateinit var moviesViewModel: MoviesViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var binding: FragmentPopularBinding
     private lateinit var adapters: MovieAdapters
     private val movieList: ArrayList<RandomMovies.Result> = ArrayList()
@@ -37,7 +43,10 @@ class PopularFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        moviesViewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
+
+        val application=activity?.application
+        (application as BaseApplication).applicationComponent.injectPopular(this)
+        moviesViewModel = ViewModelProvider(this,viewModelFactory).get(MoviesViewModel::class.java)
         adapters = MovieAdapters(this.requireContext(),movieList)
         binding.rvMovieList.layoutManager = GridLayoutManager(this.requireContext(), 2)
         binding.rvMovieList.adapter = adapters
