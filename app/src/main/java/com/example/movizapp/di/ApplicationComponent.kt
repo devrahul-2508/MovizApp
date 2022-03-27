@@ -1,7 +1,5 @@
 package com.example.movizapp.di
 
-import android.app.Application
-import com.example.movizapp.views.activities.MainActivity
 import com.example.movizapp.views.activities.MovieDetailsActivity
 import com.example.movizapp.views.fragments.PopularFragment
 import com.example.movizapp.views.fragments.TopRatedFragment
