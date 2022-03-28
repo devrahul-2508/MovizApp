@@ -43,4 +43,11 @@ interface MovieApi {
         @Query(Constants.API_KEY) api_key:String,
     ):Observable<RandomMovies.Movies>
 
+    @GET("/3/search/movie")
+        fun searchMovies(
+            @Query(Constants.QUERY) query:String,
+            @Query(Constants.API_KEY) api_key:String
+        ):Observable<RandomMovies.Movies>
+
+
 }

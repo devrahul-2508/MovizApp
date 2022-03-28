@@ -1,5 +1,6 @@
 package com.example.movizapp.di
 
+import com.example.movizapp.views.activities.MainActivity
 import com.example.movizapp.views.activities.MovieDetailsActivity
 import com.example.movizapp.views.fragments.PopularFragment
 import com.example.movizapp.views.fragments.TopRatedFragment
@@ -19,4 +20,6 @@ interface ApplicationComponent {
     fun injectTopRated(topRatedFragment: TopRatedFragment)
 
     fun injectMovieDetailsActivity(movieDetailsActivity: MovieDetailsActivity)
+
+    fun injectMainActivity(mainActivity: MainActivity)
 }

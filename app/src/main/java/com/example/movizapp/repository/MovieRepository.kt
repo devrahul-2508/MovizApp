@@ -43,4 +43,11 @@ class MovieRepository @Inject constructor(private val movieApi: MovieApi) {
             Constants.API_KEY_VALUE,
         )
     }
+    fun searchMovies(query:String):Observable<RandomMovies.Movies>{
+        return movieApi.searchMovies(
+            query,
+            Constants.API_KEY_VALUE
+        )
+    }
+
 }

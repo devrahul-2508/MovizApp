@@ -6,24 +6,99 @@
     android:layout_height="match_parent"
     tools:context=".views.activities.MainActivity">
 
-    <fragment
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/nav_view"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/mobile_navigation" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_view"
+    <LinearLayout
+        android:id="@+id/linearl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:itemIconTint="@color/icon_color"
-        app:itemTextColor="@color/icon_color"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        app:menu="@menu/bottom_nav_menu" />
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="10dp"
+        android:elevation="8dp"
+        android:weightSum="4"
+        android:background="@drawable/round_corners"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:id="@+id/idEdtSearch"
+            android:hint="Search Movies"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textSize="20sp"
+            android:backgroundTint="@android:color/transparent">
+        </EditText>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_gravity="center"
+            android:id="@+id/idIVSearch"
+            android:src="@drawable/ic_search"
+            android:padding="4dp">
+
+        </ImageView>
+
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/searchResultsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linearl"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/idRVsearchResults"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/noResultsTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Results Found"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/_120sdp"/>
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/containerFragments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearl">
+
+
+        <fragment
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/mobile_navigation"
+            tools:ignore="FragmentTagUsage" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:itemIconTint="@color/icon_color"
+            app:itemTextColor="@color/icon_color"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            app:menu="@menu/bottom_nav_menu" />
+
+
+    </RelativeLayout>
+
+
 
 </RelativeLayout>

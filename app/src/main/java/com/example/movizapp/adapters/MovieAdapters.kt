@@ -18,6 +18,8 @@ class MovieAdapters(private val context:Context,private val movieList: List<Rand
 
         val title=itemView.movieTitle
         val image=itemView.movieImage
+        val rating=itemView.rating
+        val popularity=itemView.moviePopularity
 
     }
 
@@ -29,6 +31,8 @@ class MovieAdapters(private val context:Context,private val movieList: List<Rand
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item=movieList[position]
         holder.title.text=item.title
+        holder.rating.text=item.vote_average.toString()
+        holder.popularity.text= item.popularity.toString()
         Glide.with(context).load(Constants.IMAGE_PATH+item.poster_path).into(holder.image)
 
         holder.itemView.setOnClickListener {

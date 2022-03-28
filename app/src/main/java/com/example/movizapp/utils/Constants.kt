@@ -10,6 +10,7 @@ object Constants {
     const val API_KEY:String="api_key"
     const val LANGUAGE:String="language"
     const val PAGE:String="page"
+    const val QUERY:String="query"
 
     const val MOVIE_ID:String="movie_id"
 

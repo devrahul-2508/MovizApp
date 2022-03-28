@@ -44,16 +44,11 @@ class PopularFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val application=activity?.application
-        (application as BaseApplication).applicationComponent.injectPopular(this)
-        moviesViewModel = ViewModelProvider(this,viewModelFactory).get(MoviesViewModel::class.java)
-        adapters = MovieAdapters(this.requireContext(),movieList)
-        binding.rvMovieList.layoutManager = GridLayoutManager(this.requireContext(), 2)
-        binding.rvMovieList.adapter = adapters
+        doInitialization()
 
         fetchPopularMovies()
 
-
+        binding.pbLoading.visibility = View.GONE
         //paging
         binding.rvMovieList.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
@@ -72,6 +67,15 @@ class PopularFragment : Fragment() {
         })
     }
 
+    private fun doInitialization() {
+        val application=activity?.application
+        (application as BaseApplication).applicationComponent.injectPopular(this)
+        moviesViewModel = ViewModelProvider(this,viewModelFactory).get(MoviesViewModel::class.java)
+        adapters = MovieAdapters(this.requireContext(),movieList)
+        binding.rvMovieList.layoutManager = GridLayoutManager(this.requireContext(), 3)
+        binding.rvMovieList.adapter = adapters
+    }
+
     private fun fetchPopularMovies() {
         moviesViewModel.getPopularMoviesFromApi(currentPage)
 
@@ -80,7 +84,7 @@ class PopularFragment : Fragment() {
                     totalAvailablePages = it.total_pages
                     val oldCount = movieList.size
                     movieList.addAll(it.results)
-                    adapters.notifyItemRangeInserted(oldCount, it.results.size)
+                    adapters.notifyItemRangeInserted(oldCount, movieList.size)
 
                 }
             }

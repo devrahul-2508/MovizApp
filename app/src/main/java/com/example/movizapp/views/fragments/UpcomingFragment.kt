@@ -23,12 +23,11 @@ import javax.inject.Inject
 class UpcomingFragment : Fragment() {
 
 
-
-  lateinit var moviesViewModel: MoviesViewModel
+    lateinit var moviesViewModel: MoviesViewModel
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var binding:FragmentUpcomingBinding
+    private lateinit var binding: FragmentUpcomingBinding
     private lateinit var adapters: MovieAdapters
 
     private val movieList: ArrayList<RandomMovies.Result> = ArrayList()
@@ -41,26 +40,24 @@ class UpcomingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding= FragmentUpcomingBinding.inflate(layoutInflater,container,false)
+        binding = FragmentUpcomingBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val application=activity?.application
-        (application as BaseApplication).applicationComponent.injectUpcoming(this)
-        moviesViewModel=ViewModelProvider(this,viewModelFactory).get(MoviesViewModel::class.java)
-        adapters= MovieAdapters(this.requireContext(),movieList)
-        binding.rvMovieList.layoutManager=GridLayoutManager(this.requireContext(),2)
-        binding.rvMovieList.adapter=adapters
+        doInitialization()
+
+
         fetchUpcomingMovies()
+
 
         //paging
         binding.rvMovieList.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-               /* super.onScrolled(recyclerView, dx, dy)
-                */
+                /* super.onScrolled(recyclerView, dx, dy)
+                 */
                 if (!binding.rvMovieList.canScrollVertically(1)) {
                     if (currentPage <= totalAvailablePages) {
                         ++currentPage
@@ -72,17 +69,27 @@ class UpcomingFragment : Fragment() {
 
     }
 
+    private fun doInitialization() {
+        val application = activity?.application
+        (application as BaseApplication).applicationComponent.injectUpcoming(this)
+        moviesViewModel = ViewModelProvider(this, viewModelFactory).get(MoviesViewModel::class.java)
+        adapters = MovieAdapters(this.requireContext(), movieList)
+        binding.rvMovieList.layoutManager = GridLayoutManager(this.requireContext(), 3)
+        binding.rvMovieList.adapter = adapters
+    }
+
     private fun fetchUpcomingMovies() {
+        binding.pbLoading.visibility = View.GONE
         moviesViewModel.getUpcomingMoviesFromApi(currentPage)
         moviesViewModel.movieResponse.observe(viewLifecycleOwner) { movies ->
-                movies.let {
-                    totalAvailablePages = it.total_pages
-                    val oldCount = movieList.size
-                    movieList.addAll(it.results)
-                    adapters.notifyItemRangeInserted(oldCount, movieList.size)
+            movies.let {
+                totalAvailablePages = it.total_pages
+                val oldCount = movieList.size
+                movieList.addAll(it.results)
+                adapters.notifyItemRangeInserted(oldCount, movieList.size)
 
-                }
             }
+        }
 
     }
 

@@ -83,6 +83,19 @@ class MoviesViewModel(val repository: MovieRepository):ViewModel() {
                 )
         )
     }
+    fun getSearchResults(query:String){
+        compositeDisposable.add(
+            repository.searchMovies(query)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                        response->
+                    getObserver(response as RandomMovies.Movies)
+                },
+                    {t->onFailure(t)}
+                    )
+        )
+    }
 
     private fun getReviewsObserver(reviews: RandomReviews.Reviews) {
         reviewsResponse.value=reviews
