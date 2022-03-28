@@ -9,17 +9,23 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movizapp.Application.BaseApplication
 import com.example.movizapp.R
 import com.example.movizapp.adapters.MovieAdapters
 import com.example.movizapp.databinding.FragmentTopRatedBinding
 import com.example.movizapp.models.entities.RandomMovies
 import com.example.movizapp.viewmodels.MoviesViewModel
+import com.example.movizapp.viewmodels.ViewModelFactory
+import javax.inject.Inject
 
 class TopRatedFragment : Fragment() {
 
 
     lateinit var moviesViewModel: MoviesViewModel
-    lateinit var binding:FragmentTopRatedBinding
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    lateinit var binding: FragmentTopRatedBinding
     lateinit var adapters: MovieAdapters
     private val movieList: ArrayList<RandomMovies.Result> = ArrayList()
 
@@ -30,17 +36,17 @@ class TopRatedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding= FragmentTopRatedBinding.inflate(layoutInflater,container,false)
+        binding = FragmentTopRatedBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        moviesViewModel=ViewModelProvider(this).get(MoviesViewModel::class.java)
-        adapters= MovieAdapters(this.requireContext(),movieList)
-        binding.rvMovieList.layoutManager= GridLayoutManager(this.requireContext(),2)
-        binding.rvMovieList.adapter=adapters
+
+        doInitialization()
+
 
         fetchTopRatedMovies()
+        binding.pbLoading.visibility = View.GONE
         //paging
         binding.rvMovieList.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
@@ -59,19 +65,28 @@ class TopRatedFragment : Fragment() {
 
     }
 
+    private fun doInitialization() {
+        val application = activity?.application
+        (application as BaseApplication).applicationComponent.injectTopRated(this)
+        moviesViewModel = ViewModelProvider(this, viewModelFactory).get(MoviesViewModel::class.java)
+        adapters = MovieAdapters(this.requireContext(), movieList)
+        binding.rvMovieList.layoutManager = GridLayoutManager(this.requireContext(), 3)
+        binding.rvMovieList.adapter = adapters
+    }
+
     private fun fetchTopRatedMovies() {
         moviesViewModel.getTopRatedMoviesFromApi(currentPage)
 
-            moviesViewModel.movieResponse.observe(viewLifecycleOwner) { movies ->
-                movies.let {
-                    totalAvailablePages = it.total_pages
-                    val oldCount = movieList.size
-                    movieList.addAll(movies.results)
-                    adapters.notifyItemRangeInserted(oldCount, movieList.size)
+        moviesViewModel.movieResponse.observe(viewLifecycleOwner) { movies ->
+            movies.let {
+                totalAvailablePages = it.total_pages
+                val oldCount = movieList.size
+                movieList.addAll(movies.results)
+                adapters.notifyItemRangeInserted(oldCount, movieList.size)
 
-                }
             }
         }
     }
+}
 
 

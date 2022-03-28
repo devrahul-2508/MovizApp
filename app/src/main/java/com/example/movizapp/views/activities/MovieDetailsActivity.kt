@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.movizapp.Application.BaseApplication
 import com.example.movizapp.R
 import com.example.movizapp.adapters.MovieAdapters
 import com.example.movizapp.adapters.ReviewsAdapter
@@ -17,6 +18,8 @@ import com.example.movizapp.models.entities.RandomMovies
 import com.example.movizapp.models.entities.RandomReviews
 import com.example.movizapp.utils.Constants
 import com.example.movizapp.viewmodels.MoviesViewModel
+import com.example.movizapp.viewmodels.ViewModelFactory
+import javax.inject.Inject
 
 class MovieDetailsActivity : AppCompatActivity() {
     lateinit var binding: ActivityMovieDetailsBinding
@@ -24,6 +27,9 @@ class MovieDetailsActivity : AppCompatActivity() {
     lateinit var reviewsAdapter: ReviewsAdapter
     lateinit var moviesAdapters: MovieAdapters
     private val similarMovieList: ArrayList<RandomMovies.Result> = ArrayList()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailsBinding.inflate(layoutInflater)
@@ -90,7 +96,8 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private fun doInitialization() {
         //initializing viewmodel
-        moviesViewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
+        (application as BaseApplication).applicationComponent.injectMovieDetailsActivity(this)
+        moviesViewModel = ViewModelProvider(this,viewModelFactory).get(MoviesViewModel::class.java)
         //initializing reviewsAdapter
         reviewsAdapter = ReviewsAdapter(this)
         binding.idRVReviews.layoutManager = LinearLayoutManager(this)

@@ -34,6 +34,7 @@ class ReviewsAdapter(private val context: Context):RecyclerView.Adapter<ReviewsA
     holder.userName.setText("@"+item.author_details.username)
     holder.name.text=item.author
     holder.content.text=item.content
+    holder.rating.text=item.author_details.rating.toString()
     if (item.author_details.avatar_path!=null){
         Glide.with(context).load(Constants.IMAGE_PATH+item.author_details.avatar_path).into(holder.userImage)
     }

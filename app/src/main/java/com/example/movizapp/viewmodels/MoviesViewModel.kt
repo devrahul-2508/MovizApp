@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.movizapp.models.entities.RandomMovies
 import com.example.movizapp.models.entities.RandomReviews
-import com.example.movizapp.models.network.MovieService
+import com.example.movizapp.repository.MovieRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MoviesViewModel:ViewModel() {
-    private val movieService=MovieService()
+class MoviesViewModel(val repository: MovieRepository):ViewModel() {
+   // private val movieService=MovieService()
 
     private val compositeDisposable=CompositeDisposable()
     val movieResponse=MutableLiveData<RandomMovies.Movies>()
@@ -20,7 +20,7 @@ class MoviesViewModel:ViewModel() {
 
     fun getTopRatedMoviesFromApi(page:Int){
         compositeDisposable.add(
-            movieService.getTopRatedMovies(page)
+            repository.getTopRatedMovies(page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({response->
@@ -33,7 +33,7 @@ class MoviesViewModel:ViewModel() {
 
     fun getPopularMoviesFromApi(page: Int){
         compositeDisposable.add(
-             movieService.getPopularMovies(page)
+             repository.getPopularMovies(page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({response->
@@ -46,7 +46,7 @@ class MoviesViewModel:ViewModel() {
 
     fun getUpcomingMoviesFromApi(page: Int){
         compositeDisposable.add(
-            movieService.getUpcomingMovies(page)
+            repository.getUpcomingMovies(page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({response->
@@ -58,7 +58,7 @@ class MoviesViewModel:ViewModel() {
     }
     fun getMovieReviews(movie_id:Int){
         compositeDisposable.add(
-            movieService.getReviews(movie_id)
+            repository.getReviews(movie_id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -72,7 +72,7 @@ class MoviesViewModel:ViewModel() {
     }
     fun getSimilarMovies(movie_id: Int){
         compositeDisposable.add(
-            movieService.getSimilarMovies(movie_id)
+            repository.getSimilarMovies(movie_id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -81,6 +81,19 @@ class MoviesViewModel:ViewModel() {
                 },
                     {t->onFailure(t)}
                 )
+        )
+    }
+    fun getSearchResults(query:String){
+        compositeDisposable.add(
+            repository.searchMovies(query)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                        response->
+                    getObserver(response as RandomMovies.Movies)
+                },
+                    {t->onFailure(t)}
+                    )
         )
     }
 

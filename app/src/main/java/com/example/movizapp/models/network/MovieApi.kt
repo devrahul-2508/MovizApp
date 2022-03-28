@@ -12,7 +12,7 @@ interface MovieApi {
 
     @GET(Constants.UPCOMING_END_POINT)
     fun getUpcomingMovies(
-        @Query(Constants.API_KEY) api_key:String,
+        @Query(Constants.API_KEY) api_key: String,
         @Query(Constants.LANGUAGE) language:String,
         @Query(Constants.PAGE) page:Int
     ):Observable<RandomMovies.Movies>
@@ -42,5 +42,12 @@ interface MovieApi {
         @Path(Constants.MOVIE_ID) movie_id:Int,
         @Query(Constants.API_KEY) api_key:String,
     ):Observable<RandomMovies.Movies>
+
+    @GET("/3/search/movie")
+        fun searchMovies(
+            @Query(Constants.QUERY) query:String,
+            @Query(Constants.API_KEY) api_key:String
+        ):Observable<RandomMovies.Movies>
+
 
 }
