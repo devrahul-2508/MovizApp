@@ -7,6 +7,12 @@ UpComing | Popular | Details | Search | Similar
 ![](https://github.com/devrahul-2508/MovizApp/blob/main/art/Upcoming.jpg) | ![](https://github.com/devrahul-2508/MovizApp/blob/main/art/Popular.jpg) | ![](https://github.com/devrahul-2508/MovizApp/blob/main/art/Details.jpg) | ![](https://github.com/devrahul-2508/MovizApp/blob/main/art/Search.jpg) | ![](https://github.com/devrahul-2508/MovizApp/blob/main/art/Similar.jpg) | 
 
 
+## Architecture 🗼
+
+This project follows the famous MVVM architecture and best practices from Google's [GithubBrowserSample](https://github.com/android/architecture-components-samples/tree/master/GithubBrowserSample)
+
+![](https://github.com/devrahul-2508/MovizApp/blob/main/art/arch.jpg)
+
 ## Built With 🛠
 
 
@@ -20,4 +26,6 @@ UpComing | Popular | Details | Search | Similar
 - [Dagger 2](https://dagger.dev/#:~:text=Dagger%20is%20a%20fully%20static,and%20now%20maintained%20by%20Google.) - A tool for Dependency Injections
 - [Glide](https://github.com/bumptech/glide) - An image loading library for Android.
 - [Material Components for Android](https://github.com/material-components/material-components-android) - Modular and customizable Material Design UI components for Android.
+
+
 
